@@ -31,6 +31,7 @@ class CatalogViewModel(
 
     val books: StateFlow<List<BookEntity>> =
         _searchQuery
+            // Uses the latest search text.
             .flatMapLatest { query ->
                 val cleanQuery =
                     RentalValidator.sanitizeSearchQuery(query)
@@ -76,12 +77,7 @@ class CatalogViewModel(
             return
         }
 
-        if (!RentalValidator.isValidDeadline(
-                bookingDate = bookingDate,
-                returnDeadline = returnDeadline
-            )
-        ) return
-
+        // Starts the booking as pending.
         val booking = BookingEntity(
             bookOwnerId = book.bookId,
             userName = cleanUserName,
@@ -90,6 +86,7 @@ class CatalogViewModel(
             status = BookingStatus.PENDING
         )
 
+        // Saves the booking without blocking the screen.
         viewModelScope.launch {
             repository.reserveBook(booking)
         }

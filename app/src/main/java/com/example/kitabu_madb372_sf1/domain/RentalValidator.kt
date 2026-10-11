@@ -4,6 +4,7 @@ object RentalValidator {
 
     const val MAX_NAME_LENGTH = 40
 
+    // Removes the extra spaces and limit the name length.
     fun sanitizeUserName(raw: String): String {
         return raw
             .trim()
@@ -16,7 +17,7 @@ object RentalValidator {
     }
 
     fun isValidDuration(durationDays: Int): Boolean {
-        return durationDays > 0
+        return durationDays in listOf(7, 14, 21)
     }
 
     fun isValidDeadline(
@@ -26,6 +27,7 @@ object RentalValidator {
         return returnDeadline > bookingDate
     }
 
+    // Treats the search symbols as normal text.
     fun sanitizeSearchQuery(raw: String): String {
         return raw
             .trim()

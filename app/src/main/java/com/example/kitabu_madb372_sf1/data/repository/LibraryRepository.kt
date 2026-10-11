@@ -8,6 +8,7 @@ import com.example.kitabu_madb372_sf1.data.local.BookingStatus
 import com.example.kitabu_madb372_sf1.data.local.BookingWithBook
 import kotlinx.coroutines.flow.Flow
 
+// Connects the ViewModels to the database.
 class LibraryRepository(
     private val bookDao: BookDao,
     private val bookingDao: BookingDao

@@ -68,6 +68,7 @@ fun DashboardScreen(
     viewModel: DashboardViewModel,
     modifier: Modifier = Modifier
 ) {
+    // Reads the bookings from the ViewModel.
     val bookings by viewModel.bookings.collectAsStateWithLifecycle()
 
     DashboardContent(
@@ -360,6 +361,7 @@ private fun BookingCard(
                 modifier = Modifier.height(20.dp)
             )
 
+            // Shows the buttons for the booking state.
             when (booking.status) {
 
                 BookingStatus.PENDING -> {
@@ -597,6 +599,7 @@ private fun calculateDaysRemaining(
     val difference = returnDeadline - currentTime
     val oneDay = TimeUnit.DAYS.toMillis(1)
 
+    // Rounds up days left and count full days overdue.
     return when {
         difference > 0 -> {
             (difference + oneDay - 1) / oneDay

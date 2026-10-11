@@ -41,6 +41,7 @@ fun AppNavigation(
     catalogViewModel: CatalogViewModel,
     dashboardViewModel: DashboardViewModel
 ) {
+    // Handles the navigation between screens.
     val navController = rememberNavController()
 
     val backStackEntry by navController.currentBackStackEntryAsState()

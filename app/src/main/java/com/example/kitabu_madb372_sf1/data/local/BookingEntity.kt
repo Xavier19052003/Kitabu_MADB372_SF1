@@ -5,6 +5,7 @@ import androidx.room.ForeignKey
 import androidx.room.Index
 import androidx.room.PrimaryKey
 
+// Deletes the bookings if their book is deleted.
 @Entity(
     tableName = "bookings",
     foreignKeys = [

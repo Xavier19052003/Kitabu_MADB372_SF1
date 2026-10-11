@@ -16,6 +16,7 @@ interface BookingDao {
     @Update
     suspend fun updateBooking(booking: BookingEntity)
 
+    // Gets the current bookings with book details.
     @Query(
         """
         SELECT
@@ -43,7 +44,7 @@ interface BookingDao {
         """
         UPDATE bookings
         SET returnDeadline = :newDeadline
-        WHERE bookingId = :bookingId
+        WHERE bookingId = :bookingId AND status = 'ACTIVE'
         """
     )
     suspend fun updateReturnDeadline(
@@ -56,6 +57,8 @@ interface BookingDao {
         UPDATE bookings
         SET status = :status
         WHERE bookingId = :bookingId
+          AND ((status = 'PENDING' AND :status = 'ACTIVE')
+            OR (status = 'ACTIVE' AND :status = 'RETURNED'))
         """
     )
     suspend fun updateBookingStatus(
@@ -79,35 +82,42 @@ interface BookingDao {
         """
         DELETE FROM bookings
         WHERE bookingId = :bookingId
-        AND status = 'PENDING'
+        AND bookOwnerId = :bookId AND status = 'PENDING'
         """
     )
     suspend fun deletePendingBooking(
-        bookingId: Int
+        bookingId: Int,
+        bookId: Int
     ): Int
 
+    @Query("UPDATE books SET isAvailable = 0 WHERE bookId = :bookId AND isAvailable = 1")
+    suspend fun claimAvailableBook(bookId: Int): Int
+
+    @Query("UPDATE bookings SET status = 'RETURNED' WHERE bookingId = :bookingId AND bookOwnerId = :bookId AND status = 'ACTIVE'")
+    suspend fun markActiveBookingReturned(bookingId: Int, bookId: Int): Int
+
+    // Updates the booking and book together.
     @Transaction
     suspend fun returnBook(
         bookingId: Int,
         bookId: Int
     ) {
-        updateBookingStatus(
-            bookingId = bookingId,
-            status = BookingStatus.RETURNED
-        )
-
-        updateBookAvailability(
-            bookId = bookId,
-            isAvailable = true
-        )
+        // Only returns an active booking.
+        if (markActiveBookingReturned(bookingId, bookId) > 0) {
+            updateBookAvailability(
+                bookId = bookId,
+                isAvailable = true
+            )
+        }
     }
 
+    // Makes sure the book is available after cancellation.
     @Transaction
     suspend fun cancelPendingBooking(
         bookingId: Int,
         bookId: Int
     ) {
-        val deletedRows = deletePendingBooking(bookingId)
+        val deletedRows = deletePendingBooking(bookingId, bookId)
 
         if (deletedRows > 0) {
             updateBookAvailability(
@@ -117,15 +127,14 @@ interface BookingDao {
         }
     }
 
+    // Reserves the book in one single transaction.
     @Transaction
     suspend fun reserveBook(
         booking: BookingEntity
     ): Long {
 
-        updateBookAvailability(
-            bookId = booking.bookOwnerId,
-            isAvailable = false
-        )
+        // Checks that the book is still available.
+        if (claimAvailableBook(booking.bookOwnerId) == 0) return 0L
 
         return insertBooking(booking)
     }

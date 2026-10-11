@@ -4,6 +4,7 @@ import android.content.Context
 import com.example.kitabu_madb372_sf1.data.local.AppDatabase
 import com.example.kitabu_madb372_sf1.data.repository.LibraryRepository
 
+// Creates the database and repository when needed.
 class AppContainer(context: Context) {
 
     private val database: AppDatabase by lazy {

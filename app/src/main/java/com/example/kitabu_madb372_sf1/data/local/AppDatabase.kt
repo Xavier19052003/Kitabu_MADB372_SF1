@@ -26,6 +26,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     companion object {
 
+        // Use one database instance.
         @Volatile
         private var INSTANCE: AppDatabase? = null
 
@@ -50,11 +51,13 @@ abstract class AppDatabase : RoomDatabase() {
 
     private class DatabaseCallback : Callback() {
 
+        // Adds sample books on first setup.
         override fun onCreate(db: androidx.sqlite.db.SupportSQLiteDatabase) {
             super.onCreate(db)
 
             INSTANCE?.let { database ->
 
+                // Adds the books in the background.
                 CoroutineScope(Dispatchers.IO).launch {
 
                     database.bookDao().insertBooks(

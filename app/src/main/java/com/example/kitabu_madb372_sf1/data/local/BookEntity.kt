@@ -3,6 +3,7 @@ package com.example.kitabu_madb372_sf1.data.local
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
+// Stores the book details.
 @Entity(tableName = "books")
 data class BookEntity(
     @PrimaryKey(autoGenerate = true)

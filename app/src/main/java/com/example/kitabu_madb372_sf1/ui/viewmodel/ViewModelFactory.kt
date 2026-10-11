@@ -9,6 +9,7 @@ fun kitabuViewModelFactory(
     repository: LibraryRepository
 ): ViewModelProvider.Factory {
 
+    // Gives both the ViewModels the same repository.
     return viewModelFactory {
 
         initializer {

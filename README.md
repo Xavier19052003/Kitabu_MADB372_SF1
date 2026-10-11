@@ -23,55 +23,57 @@ The application allows users to browse a local book catalogue, search for books,
 
 ## CRUD Screenshots and Demonstration
 
-Final screenshots will be added after the application design has been completed.
+The screenshots below demonstrate the main booking lifecycle and the empty reservations state.
 
 ### Create - Reserve Dialog
 
 This demonstrates the creation of a new reservation for an available book.
 
-<!-- Add final screenshot here: images/01-reserve-dialog.png -->
+![Reserve Book Dialog](images/03-reserve-dialog.png)
 
 ### Read - Catalog and Search
 
 This demonstrates browsing the book catalogue and filtering books by title or author.
 
-<!-- Add final screenshot here: images/02-catalog-search.png -->
+![Book Catalog](images/01-catalog.png)
+
+![Search Results](images/02-search.png)
 
 ### Read - Reservations Dashboard
 
 This demonstrates viewing current reservations together with booking dates, return deadlines, status, and days remaining.
 
-<!-- Add final screenshot here: images/03-reservations-dashboard.png -->
+![Pending Reservation](images/04-pending-reservation.png)
 
 ### Update - Confirm Pickup
 
 This demonstrates changing a reservation from `PENDING` to `ACTIVE`.
 
-<!-- Add final screenshot here: images/04-confirm-pickup.png -->
+![Active Reservation](images/05-active-reservation.png)
 
 ### Update - Renew Rental
 
 This demonstrates extending the return deadline of an active rental.
 
-<!-- Add final screenshot here: images/05-renew.png -->
+![Renew Dialog](images/06-renew-dialog.png)
 
 ### Update - Return Book
 
 This demonstrates returning an active rental and making the book available again.
 
-<!-- Add final screenshot here: images/06-return.png -->
+![Returned Book](images/07-returned-book.png)
 
 ### Delete - Cancel Reservation
 
 This demonstrates cancelling a pending reservation before pickup.
 
-<!-- Add final screenshot here: images/07-cancel.png -->
+![Cancel Reservation](images/08-cancel-reservation.png)
 
 ### Empty Reservations State
 
 This demonstrates the dashboard when there are no current reservations.
 
-<!-- Add final screenshot here: images/08-empty-state.png -->
+![Empty Reservations](images/09-empty-state.png)
 
 ## Technology Stack
 
@@ -368,7 +370,7 @@ The Navigation Compose setup uses:
 To run Kitabu, the following are required:
 
 - Android Studio Ladybug or newer
-- JDK 17 or newer
+- JDK 25 for the current Gradle daemon configuration (Java source compatibility is 17)
 - Android emulator or physical Android device
 - Android API 26 or newer
 
@@ -377,7 +379,7 @@ To run Kitabu, the following are required:
 1. Clone or download the Kitabu repository.
 2. Open the `Kitabu_MADB372_SF1` project in Android Studio.
 3. Allow Gradle to complete the project sync.
-4. Ensure JDK 17 or newer is configured.
+4. Use the configured JDK 25 Gradle daemon and install Android SDK 37. The current project uses Gradle 9.5.0 and Android Gradle Plugin 9.3.3; use an Android Studio version compatible with these versions.
 5. Start an Android emulator or connect a physical Android device running API 26 or newer.
 6. Select the `app` run configuration.
 7. Run the application.

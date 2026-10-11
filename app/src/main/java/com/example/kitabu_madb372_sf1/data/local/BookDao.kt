@@ -17,6 +17,7 @@ interface BookDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertBooks(books: List<BookEntity>)
 
+    // Updates the list when books change.
     @Query("SELECT * FROM books ORDER BY title ASC")
     fun getAllBooks(): Flow<List<BookEntity>>
 
@@ -37,6 +38,7 @@ interface BookDao {
     ORDER BY title ASC
     """
     )
+    // Searches using the cleaned text.
     fun searchBooks(query: String): Flow<List<BookEntity>>
 
     @Query(

@@ -21,6 +21,7 @@ class MainActivity : ComponentActivity() {
 
         val app = application as KitabuApplication
 
+        // Uses the app repository for the ViewModels.
         val factory = kitabuViewModelFactory(
             repository = app.container.libraryRepository
         )

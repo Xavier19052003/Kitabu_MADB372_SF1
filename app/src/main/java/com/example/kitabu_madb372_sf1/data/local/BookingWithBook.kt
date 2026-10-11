@@ -1,5 +1,6 @@
 package com.example.kitabu_madb372_sf1.data.local
 
+// Combines book and booking details.
 data class BookingWithBook(
     val bookingId: Int,
     val bookOwnerId: Int,

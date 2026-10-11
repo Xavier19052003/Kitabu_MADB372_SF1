@@ -10,6 +10,7 @@ class KitabuApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        // Set up the app container.
         container = AppContainer(this)
     }
 }

@@ -56,6 +56,7 @@ fun CatalogScreen(
     viewModel: CatalogViewModel,
     modifier: Modifier = Modifier
 ) {
+    // Reads the screen data from the ViewModel.
     val books by viewModel.books.collectAsStateWithLifecycle()
     val searchQuery by viewModel.searchQuery.collectAsStateWithLifecycle()
 
@@ -76,6 +77,7 @@ private fun CatalogContent(
     onReserveBook: (BookEntity, String, Int) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    // Remembers the book selected for the dialog.
     var selectedBook by remember {
         mutableStateOf<BookEntity?>(null)
     }

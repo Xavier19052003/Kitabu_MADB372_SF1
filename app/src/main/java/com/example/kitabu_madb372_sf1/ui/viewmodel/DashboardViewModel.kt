@@ -24,6 +24,7 @@ class DashboardViewModel(
                 initialValue = emptyList()
             )
 
+    // Only confirms the pending bookings.
     fun confirmPickup(booking: BookingWithBook) {
         if (booking.status != BookingStatus.PENDING) {
             return
@@ -49,6 +50,7 @@ class DashboardViewModel(
             return
         }
 
+        // Uses today as if the deadline has passed.
         val baseDeadline = maxOf(
             booking.returnDeadline,
             System.currentTimeMillis()
@@ -75,6 +77,7 @@ class DashboardViewModel(
         }
     }
 
+    // Returns the book and makes it available.
     fun returnBook(booking: BookingWithBook) {
         if (booking.status != BookingStatus.ACTIVE) {
             return
@@ -88,6 +91,7 @@ class DashboardViewModel(
         }
     }
 
+    // Cancels a booking before pickup.
     fun cancelBooking(booking: BookingWithBook) {
         if (booking.status != BookingStatus.PENDING) {
             return
